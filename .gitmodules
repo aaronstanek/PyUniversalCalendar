@@ -1,0 +1,3 @@
+[submodule "src/PyUniversalCalendar/CUniversalCalendar"]
+	path = src/PyUniversalCalendar/CUniversalCalendar
+	url = https://github.com/aaronstanek/CUniversalCalendar.git
