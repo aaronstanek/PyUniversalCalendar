@@ -1,0 +1,6 @@
+*.c
+*.h
+*.so
+*.pyd
+build/*
+__pycache__/*
