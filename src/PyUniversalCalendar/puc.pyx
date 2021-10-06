@@ -31,6 +31,36 @@ def check_error_code(int code):
 cdef class UniversalCalendarDate:
     def __init__(self):
         raise NotImplementedError("Instantiation of UniversalCalendarDate base class is forbidden")
+    def __eq__(self,other):
+        if isinstance(other,UniversalCalendarDate):
+            return self.udn() == other.udn()
+        else:
+            raise TypeError("Expected UniversalCalendarDate, not"+str(type(other)))
+    def __ne__(self,other):
+        if isinstance(other,UniversalCalendarDate):
+            return self.udn() != other.udn()
+        else:
+            raise TypeError("Expected UniversalCalendarDate, not"+str(type(other)))
+    def __lt__(self,other):
+        if isinstance(other,UniversalCalendarDate):
+            return self.udn() < other.udn()
+        else:
+            raise TypeError("Expected UniversalCalendarDate, not"+str(type(other)))
+    def __gt__(self,other):
+        if isinstance(other,UniversalCalendarDate):
+            return self.udn() > other.udn()
+        else:
+            raise TypeError("Expected UniversalCalendarDate, not"+str(type(other)))
+    def __le__(self,other):
+        if isinstance(other,UniversalCalendarDate):
+            return self.udn() <= other.udn()
+        else:
+            raise TypeError("Expected UniversalCalendarDate, not"+str(type(other)))
+    def __ge__(self,other):
+        if isinstance(other,UniversalCalendarDate):
+            return self.udn() >= other.udn()
+        else:
+            raise TypeError("Expected UniversalCalendarDate, not"+str(type(other)))
 
 cdef extern from "CUniversalCalendar/common/YMD.h":
     struct YMD:
