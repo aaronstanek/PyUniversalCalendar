@@ -30,14 +30,14 @@ cdef extern from "CUniversalCalendar/dayOfWeek/DayOfWeek.h":
 
 cdef class UniversalCalendarDate:
     cdef long _udn
-    def __init__(UniversalCalendarDate self):
+    def __init__(self):
         raise NotImplementedError("Instantiation of UniversalCalendarDate base class is forbidden")
-    def udn(UniversalCalendarDate self):
+    def udn(self):
         return self._udn
-    def day_of_week_string(UniversalCalendarDate self):
+    def day_of_week_string(self):
         cdef bytes output = dayOfWeekString(&PUC_CACHE,self._udn)
         return output.decode("UTF-8")
-    def day_of_week_iso(UniversalCalendarDate self):
+    def day_of_week_iso(self):
         return dayOfWeekISO(self._udn)
     def __eq__(self,other):
         if isinstance(other,UniversalCalendarDate):
@@ -131,7 +131,6 @@ cdef class SpecialDate_YMD(UniversalCalendarDate):
 cdef extern from "CUniversalCalendar/Gregorian/Gregorian.h":
     int GregorianEncode(CalendarCache*, YMD*, long)
     int GregorianDecode(CalendarCache*, long*, YMD*)
-    int GregorianShift(CalendarCache*, YMD*, YMD*, long)
 
 cdef class GregorianDate(SpecialDate_YMD):
     def __init__(self,*args):
