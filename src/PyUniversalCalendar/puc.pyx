@@ -32,7 +32,7 @@ cdef class SpecialDate_YMD(UniversalCalendarDate):
             if type(args[0]) == int:
                 self._udn = args[0]
             elif isinstance(args[0],UniversalCalendarDate):
-                self._udn = args[0].udn
+                self._udn = args[0].udn()
             else:
                 raise TypeError("Expected int or UniversalCalendarDate, not "+str(type(args[0])))
             self._encode()
