@@ -2,5 +2,5 @@
 *.h
 *.so
 *.pyd
-build/*
-__pycache__/*
+build/
+__pycache__/
