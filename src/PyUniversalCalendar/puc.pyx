@@ -66,6 +66,29 @@ cdef class UniversalCalendarDate:
             return self.udn() >= other.udn()
         else:
             raise TypeError("Expected UniversalCalendarDate, not"+str(type(other)))
+    def __add__(a,b):
+        # safe to assume that at least one of the arguments
+        # is a UniversalCalendarDate
+        if type(a) == int:
+            # b must be UniversalCalendarDate
+            return type(b)( b.udn() + a )
+        elif type(b) == int:
+            # a must be UniversalCalendarDate
+            return type(a)( a.udn() + b )
+        else:
+            raise TypeError("Expected UniversalCalendarDate and int, not "+str(type(a))+" and "+str(type(b)))
+    def __sub__(a,b):
+        # a must be UniversalCalendarDate
+        # b must be UniversalCalendarDate or int
+        if isinstance(a,UniversalCalendarDate):
+            if type(b) == int:
+                return a.udn() - b
+            elif isinstance(b,UniversalCalendarDate):
+                return a.udn() - b.udn()
+            else:
+                raise TypeError("Expected int or UniversalCalendarDate, not "+str(type(b)))
+        else:
+            raise TypeError("Expected UniversalCalendarDate, not "+str(type(a)))
 
 cdef extern from "CUniversalCalendar/common/YMD.h":
     struct YMD:
