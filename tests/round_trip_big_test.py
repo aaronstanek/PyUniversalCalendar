@@ -88,4 +88,5 @@ def main():
         past = b
     print("All Good!")
 
-main()
+if __name__ == '__main__':
+    main()
