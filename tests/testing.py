@@ -108,5 +108,26 @@ class TestGregorianDate(unittest.TestCase):
         self.assertEqual(a.day_of_week_string(),"Friday")
         self.assertEqual(a.day_of_week_iso(),5)
 
+    def test_comparison_methods(self):
+        a = puc.GregorianDate(2000,1,1)
+        b = puc.GregorianDate(2000,1,1)
+        c = puc.GregorianDate(2000,1,2)
+        self.assertTrue(a == b)
+        self.assertFalse(a == c)
+        self.assertFalse(a != b)
+        self.assertTrue(a != c)
+        self.assertFalse(a < b)
+        self.assertTrue(a < c)
+        self.assertFalse(c < a)
+        self.assertFalse(a > b)
+        self.assertFalse(a > c)
+        self.assertTrue(c > a)
+        self.assertTrue(a <= b)
+        self.assertTrue(a <= c)
+        self.assertFalse(c <= a)
+        self.assertTrue(a >= b)
+        self.assertFalse(a >= c)
+        self.assertTrue(c >= a)
+
 if __name__ == '__main__':
     unittest.main()
