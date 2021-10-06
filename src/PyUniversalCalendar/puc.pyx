@@ -3,10 +3,6 @@ cdef extern from "CUniversalCalendar/common/CalendarCache.h":
         pass
     void CalendarCache__constructor(CalendarCache*)
 
-cdef extern from "CUniversalCalendar/dayOfWeek/DayOfWeek.h":
-    const char* dayOfWeekString(CalendarCache*, long)
-    int dayOfWeekISO(long)
-
 cdef CalendarCache PUC_CACHE
 CalendarCache__constructor(&PUC_CACHE)
 
@@ -28,14 +24,21 @@ def check_error_code(int code):
         else:
             raise UniversalCalendarError("Unknown Internal Error")
 
+cdef extern from "CUniversalCalendar/dayOfWeek/DayOfWeek.h":
+    const char* dayOfWeekString(CalendarCache*, long)
+    int dayOfWeekISO(long)
+
 cdef class UniversalCalendarDate:
-    def __init__(self):
+    cdef long _udn
+    def __init__(UniversalCalendarDate self):
         raise NotImplementedError("Instantiation of UniversalCalendarDate base class is forbidden")
-    def day_of_week_string(self):
-        cdef bytes output = dayOfWeekString(&PUC_CACHE,self.udn())
+    def udn(UniversalCalendarDate self):
+        return self._udn
+    def day_of_week_string(UniversalCalendarDate self):
+        cdef bytes output = dayOfWeekString(&PUC_CACHE,self._udn)
         return output.decode("UTF-8")
-    def day_of_week_iso(self):
-        return dayOfWeekISO(self.udn())
+    def day_of_week_iso(UniversalCalendarDate self):
+        return dayOfWeekISO(self._udn)
     def __eq__(self,other):
         if isinstance(other,UniversalCalendarDate):
             return self.udn() == other.udn()
@@ -97,7 +100,6 @@ cdef extern from "CUniversalCalendar/common/YMD.h":
         unsigned char day
 
 cdef class SpecialDate_YMD(UniversalCalendarDate):
-    cdef long _udn
     cdef YMD _ymd
     def __init__(self,*args):
         if len(args) == 1:
@@ -119,8 +121,6 @@ cdef class SpecialDate_YMD(UniversalCalendarDate):
             self._decode()
         else:
             raise ValueError("Expected either 1 or 3 parameters, not "+str(len(args)))
-    def udn(self):
-        return self._udn
     def year(self):
         return self._ymd.year
     def month(self):
