@@ -10,9 +10,23 @@ cdef extern from "CUniversalCalendar/dayOfWeek/DayOfWeek.h":
 cdef CalendarCache PUC_CACHE
 CalendarCache__constructor(&PUC_CACHE)
 
+class UniversalCalendarError(Exception):
+    pass
+
+class UniversalCalendarValidationError(UniversalCalendarError):
+    pass
+
+class UniversalCalendarBoundsError(UniversalCalendarError):
+    pass
+
 def check_error_code(int code):
     if code:
-        raise Exception("A bad thing happened.")
+        if code == 1:
+            raise UniversalCalendarValidationError()
+        elif code == 2:
+            raise UniversalCalendarBoundsError()
+        else:
+            raise UniversalCalendarError("Unknown Internal Error")
 
 cdef class UniversalCalendarDate:
     def __init__(self):
