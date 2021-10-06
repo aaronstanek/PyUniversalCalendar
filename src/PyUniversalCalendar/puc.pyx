@@ -35,38 +35,37 @@ cdef class UniversalCalendarDate:
     def udn(self):
         return self._udn
     def day_of_week_string(self):
-        cdef bytes output = dayOfWeekString(&PUC_CACHE,self._udn)
-        return output.decode("UTF-8")
+        return bytes( dayOfWeekString(&PUC_CACHE,self._udn) ).decode("UTF-8")
     def day_of_week_iso(self):
         return dayOfWeekISO(self._udn)
     def __eq__(self,other):
         if isinstance(other,UniversalCalendarDate):
-            return self.udn() == other.udn()
+            return (<UniversalCalendarDate>self)._udn == (<UniversalCalendarDate>other)._udn
         else:
             raise TypeError("Expected UniversalCalendarDate, not"+str(type(other)))
     def __ne__(self,other):
         if isinstance(other,UniversalCalendarDate):
-            return self.udn() != other.udn()
+            return (<UniversalCalendarDate>self)._udn != (<UniversalCalendarDate>other)._udn
         else:
             raise TypeError("Expected UniversalCalendarDate, not"+str(type(other)))
     def __lt__(self,other):
         if isinstance(other,UniversalCalendarDate):
-            return self.udn() < other.udn()
+            return (<UniversalCalendarDate>self)._udn < (<UniversalCalendarDate>other)._udn
         else:
             raise TypeError("Expected UniversalCalendarDate, not"+str(type(other)))
     def __gt__(self,other):
         if isinstance(other,UniversalCalendarDate):
-            return self.udn() > other.udn()
+            return (<UniversalCalendarDate>self)._udn > (<UniversalCalendarDate>other)._udn
         else:
             raise TypeError("Expected UniversalCalendarDate, not"+str(type(other)))
     def __le__(self,other):
         if isinstance(other,UniversalCalendarDate):
-            return self.udn() <= other.udn()
+            return (<UniversalCalendarDate>self)._udn <= (<UniversalCalendarDate>other)._udn
         else:
             raise TypeError("Expected UniversalCalendarDate, not"+str(type(other)))
     def __ge__(self,other):
         if isinstance(other,UniversalCalendarDate):
-            return self.udn() >= other.udn()
+            return (<UniversalCalendarDate>self)._udn >= (<UniversalCalendarDate>other)._udn
         else:
             raise TypeError("Expected UniversalCalendarDate, not"+str(type(other)))
     def __add__(a,b):
