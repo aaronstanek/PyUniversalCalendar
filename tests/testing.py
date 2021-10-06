@@ -81,6 +81,23 @@ class TestBaseClass(unittest.TestCase):
         self.assertTrue(a >= b)
         self.assertFalse(a >= c)
         self.assertTrue(c >= a)
+    
+    def test_add(self):
+        a = puc.GregorianDate(1999,12,30)
+        b = a + 11
+        self.assertEqual(b.year(),2000)
+        self.assertEqual(b.month(),1)
+        self.assertEqual(b.day(),10)
+        a = puc.GregorianDate(1900,2,8)
+        b = 35 + a
+        self.assertEqual(b.year(),1900)
+        self.assertEqual(b.month(),3)
+        self.assertEqual(b.day(),15)
+        a = puc.GregorianDate(1,1,1)
+        a += (-1)
+        self.assertEqual(a.year(),-1)
+        self.assertEqual(a.month(),12)
+        self.assertEqual(a.day(),31)
 
 class TestGregorianDate(unittest.TestCase):
 
