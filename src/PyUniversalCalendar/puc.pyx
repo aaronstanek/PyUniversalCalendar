@@ -31,6 +31,11 @@ def check_error_code(int code):
 cdef class UniversalCalendarDate:
     def __init__(self):
         raise NotImplementedError("Instantiation of UniversalCalendarDate base class is forbidden")
+    def day_of_week_string(self):
+        cdef bytes output = dayOfWeekString(&PUC_CACHE,self.udn())
+        return output.decode("UTF-8")
+    def day_of_week_iso(self):
+        return dayOfWeekISO(self.udn())
     def __eq__(self,other):
         if isinstance(other,UniversalCalendarDate):
             return self.udn() == other.udn()
@@ -99,11 +104,6 @@ cdef class SpecialDate_YMD(UniversalCalendarDate):
         return self._ymd.month
     def day(self):
         return self._ymd.day
-    def day_of_week_string(self):
-        cdef bytes output = dayOfWeekString(&PUC_CACHE,self._udn)
-        return output.decode("UTF-8")
-    def day_of_week_iso(self):
-        return dayOfWeekISO(self._udn)
 
 cdef extern from "CUniversalCalendar/Gregorian/Gregorian.h":
     int GregorianEncode(CalendarCache*, YMD*, long)
