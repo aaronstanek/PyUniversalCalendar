@@ -73,10 +73,10 @@ cdef class UniversalCalendarDate:
         # is a UniversalCalendarDate
         if type(a) == int:
             # b must be UniversalCalendarDate
-            return type(b)( b.udn() + a )
+            return type(b)( int( (<UniversalCalendarDate>b)._udn ) + a )
         elif type(b) == int:
             # a must be UniversalCalendarDate
-            return type(a)( a.udn() + b )
+            return type(a)( int( (<UniversalCalendarDate>a)._udn ) + b )
         else:
             raise TypeError("Expected UniversalCalendarDate and int, not "+str(type(a))+" and "+str(type(b)))
     def __sub__(a,b):
@@ -84,9 +84,9 @@ cdef class UniversalCalendarDate:
         # b must be UniversalCalendarDate or int
         if isinstance(a,UniversalCalendarDate):
             if type(b) == int:
-                return a.udn() - b
+                return type(a)( int( (<UniversalCalendarDate>a)._udn ) - b )
             elif isinstance(b,UniversalCalendarDate):
-                return a.udn() - b.udn()
+                return int( (<UniversalCalendarDate>a)._udn ) - int( (<UniversalCalendarDate>b)._udn )
             else:
                 raise TypeError("Expected int or UniversalCalendarDate, not "+str(type(b)))
         else:
