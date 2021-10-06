@@ -10,7 +10,7 @@ cdef extern from "CUniversalCalendar/dayOfWeek/DayOfWeek.h":
 cdef CalendarCache PUC_CACHE
 CalendarCache__constructor(&PUC_CACHE)
 
-def check_error_code(code):
+def check_error_code(int code):
     if code:
         raise Exception("A bad thing happened.")
 
@@ -35,7 +35,7 @@ cdef class SpecialDate_YMD(UniversalCalendarDate):
                 self._udn = args[0].udn
             else:
                 raise TypeError("Expected int or UniversalCalendarDate, not "+str(type(args[0])))
-            check_error_code(self._encode())
+            self._encode()
         elif len(args) == 3:
             # all three must be int
             for i in range(3):
@@ -44,7 +44,7 @@ cdef class SpecialDate_YMD(UniversalCalendarDate):
             self._ymd.year = args[0]
             self._ymd.month = args[1]
             self._ymd.day = args[2]
-            check_error_code(self._decode())
+            self._decode()
         else:
             raise ValueError("Expected either 1 or 3 parameters, not "+str(len(args)))
     def udn(self):
@@ -70,6 +70,6 @@ cdef class GregorianDate(SpecialDate_YMD):
     def __init__(self,*args):
         super().__init__(*args)
     def _encode(self):
-        return GregorianEncode(&PUC_CACHE,&(self._ymd),self._udn)
+        check_error_code( GregorianEncode(&PUC_CACHE,&(self._ymd),self._udn) )
     def _decode(self):
-        return GregorianDecode(&PUC_CACHE,&(self._udn),&(self._ymd))
+        check_error_code( GregorianDecode(&PUC_CACHE,&(self._udn),&(self._ymd)) )
