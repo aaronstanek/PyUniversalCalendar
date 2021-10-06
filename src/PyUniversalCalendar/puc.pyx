@@ -1,3 +1,11 @@
+cdef extern from "CUniversalCalendar/common/CalendarCache.h":
+    struct CalendarCache:
+        pass
+    void CalendarCache__constructor(CalendarCache*)
+
+cdef CalendarCache PUC_CACHE
+CalendarCache__constructor(&PUC_CACHE)
+
 cdef extern from "CUniversalCalendar/common/YMD.h":
     struct YMD:
         long year
