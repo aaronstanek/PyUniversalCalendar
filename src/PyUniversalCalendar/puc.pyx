@@ -30,7 +30,7 @@ def check_error_code(int code):
 
 cdef class UniversalCalendarDate:
     def __init__(self):
-        raise NotImplementedError("instantiation of UniversalCalendarDate base class is forbidden")
+        raise NotImplementedError("Instantiation of UniversalCalendarDate base class is forbidden")
 
 cdef extern from "CUniversalCalendar/common/YMD.h":
     struct YMD:
