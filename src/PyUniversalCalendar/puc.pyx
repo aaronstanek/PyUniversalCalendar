@@ -3,6 +3,10 @@ cdef extern from "CUniversalCalendar/common/CalendarCache.h":
         pass
     void CalendarCache__constructor(CalendarCache*)
 
+cdef extern from "CUniversalCalendar/dayOfWeek/DayOfWeek.h":
+    const char* dayOfWeekString(CalendarCache*, long)
+    int dayOfWeekISO(long)
+
 cdef CalendarCache PUC_CACHE
 CalendarCache__constructor(&PUC_CACHE)
 
@@ -51,11 +55,16 @@ cdef class SpecialDate_YMD(UniversalCalendarDate):
         return self._ymd.month
     def day(self):
         return self._ymd.day
+    def day_of_week_string(self):
+        cdef bytes output = dayOfWeekString(&PUC_CACHE,self._udn)
+        return output.decode("UTF-8")
+    def day_of_week_iso(self):
+        return dayOfWeekISO(self._udn)
 
 cdef extern from "CUniversalCalendar/Gregorian/Gregorian.h":
-    int GregorianEncode(CalendarCache*, YMD*, long);
-    int GregorianDecode(CalendarCache*, long*, YMD*);
-    int GregorianShift(CalendarCache*, YMD*, YMD*, long);
+    int GregorianEncode(CalendarCache*, YMD*, long)
+    int GregorianDecode(CalendarCache*, long*, YMD*)
+    int GregorianShift(CalendarCache*, YMD*, YMD*, long)
 
 cdef class GregorianDate(SpecialDate_YMD):
     def __init__(self,*args):
