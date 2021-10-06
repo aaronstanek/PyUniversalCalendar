@@ -98,6 +98,23 @@ class TestBaseClass(unittest.TestCase):
         self.assertEqual(a.year(),-1)
         self.assertEqual(a.month(),12)
         self.assertEqual(a.day(),31)
+    
+    def test_sub(self):
+        a = puc.GregorianDate(1900,3,15)
+        b = puc.GregorianDate(1900,2,8)
+        self.assertEqual(a - b, 35)
+        a = puc.GregorianDate(2000,1,10)
+        b = a - 11
+        self.assertEqual(b.year(),1999)
+        self.assertEqual(b.month(),12)
+        self.assertEqual(b.day(),30)
+        a = puc.GregorianDate(1605,11,5)
+        a -= 4
+        self.assertEqual(a.year(),1605)
+        self.assertEqual(a.month(),11)
+        self.assertEqual(a.day(),1)
+        a -= puc.GregorianDate(1605,11,5)
+        self.assertEqual(a,-4)
 
 class TestGregorianDate(unittest.TestCase):
 
