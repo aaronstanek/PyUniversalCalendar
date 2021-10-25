@@ -3,5 +3,6 @@ from .puc import (
     UniversalCalendarValidationError,
     UniversalCalendarBoundsError,
     UniversalCalendarDate,
-    GregorianDate
+    GregorianDate,
+    JulianDate
     )
