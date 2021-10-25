@@ -163,5 +163,20 @@ class TestGregorianDate(unittest.TestCase):
             c = puc.GregorianDate(*b)
             self.assertEqual(udn,c.udn())
 
+class TestJulianDate(unittest.TestCase):
+
+    # we have already passed a round trip test
+    # for the Julian Calendar
+    # we only need to check for correspondence
+    # with the Gregorian Calendar
+
+    def test_correspondence(self):
+        # After 28th February 1700 add eleven days to the Julian Calendar
+        a = puc.JulianDate(1700,3,1)
+        b = puc.GregorianDate(a)
+        self.assertEqual(b.year(),1700)
+        self.assertEqual(b.month(),3)
+        self.assertEqual(b.day(),12)
+
 if __name__ == '__main__':
     unittest.main()
