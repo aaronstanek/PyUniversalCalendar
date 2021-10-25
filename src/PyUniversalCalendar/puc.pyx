@@ -1,3 +1,6 @@
+cdef extern from "<stdlib.h>":
+    void* free(void*)
+
 cdef extern from "CUniversalCalendar/common/ErrorType.h":
     ctypedef int UniversalCalendarErrorCode
 
