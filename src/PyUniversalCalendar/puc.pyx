@@ -156,6 +156,7 @@ cdef class SpecialDate_YMD(UniversalCalendarDate):
 cdef extern from "CUniversalCalendar/Gregorian/Gregorian.h":
     UniversalCalendarErrorCode GregorianEncode(CalendarCache*, YMD*, int_fast32_t)
     UniversalCalendarErrorCode GregorianDecode(CalendarCache*, int_fast32_t*, YMD*)
+    UniversalCalendarErrorCode GregorianToString(YMD*,char**)
 
 cdef class GregorianDate(SpecialDate_YMD):
     def __init__(self,*args):
@@ -164,6 +165,23 @@ cdef class GregorianDate(SpecialDate_YMD):
         check_error_code( GregorianEncode(&PUC_CACHE,&(self._ymd),self._udn) )
     def _decode(self):
         check_error_code( GregorianDecode(&PUC_CACHE,&(self._udn),&(self._ymd)) )
+    def __str__(self):
+        cdef char* c_string
+        check_error_code( GregorianToString(&(self._ymd),&c_string) )
+        # if an error is raised
+        # then c_string will not have been changed
+        # (it's still undefined)
+        try:
+            output = (<bytes>c_string).decode("UTF-8")
+            free(c_string)
+            return output
+        except:
+            # ran into an exception
+            # in creating bytes, or in conversion
+            # to Python string
+            # c_string is still intact
+            free(c_string)
+            raise MemoryError()
 
 cdef extern from "CUniversalCalendar/Julian/Julian.h":
     UniversalCalendarErrorCode JulianEncode(CalendarCache*, YMD*, int_fast32_t)
