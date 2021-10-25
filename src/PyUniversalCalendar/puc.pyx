@@ -1,3 +1,23 @@
+cdef extern from "<stdint.h>":
+    ctypedef int intmax_t
+    ctypedef unsigned int uintmax_t
+    ctypedef int int_least8_t
+    ctypedef unsigned int uint_least8_t
+    ctypedef int int_least16_t
+    ctypedef unsigned int uint_least16_t
+    ctypedef int int_least32_t
+    ctypedef unsigned int uint_least32_t
+    ctypedef int int_least64_t
+    ctypedef unsigned int uint_least64_t
+    ctypedef int int_fast8_t
+    ctypedef unsigned int uint_fast8_t
+    ctypedef int int_fast16_t
+    ctypedef unsigned int uint_fast16_t
+    ctypedef int int_fast32_t
+    ctypedef unsigned int uint_fast32_t
+    ctypedef int int_fast64_t
+    ctypedef unsigned int uint_fast64_t
+
 cdef extern from "CUniversalCalendar/common/CalendarCache.h":
     struct CalendarCache:
         pass
