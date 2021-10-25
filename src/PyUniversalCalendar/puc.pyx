@@ -25,11 +25,11 @@ def check_error_code(int code):
             raise UniversalCalendarError("Unknown Internal Error")
 
 cdef extern from "CUniversalCalendar/dayOfWeek/DayOfWeek.h":
-    const char* dayOfWeekString(CalendarCache*, long)
-    int dayOfWeekISO(long)
+    const char* dayOfWeekString(CalendarCache*, int_fast32_t)
+    int dayOfWeekISO(int_fast32_t)
 
 cdef class UniversalCalendarDate:
-    cdef long _udn
+    cdef int_fast32_t _udn
     def __init__(self):
         raise NotImplementedError("Instantiation of UniversalCalendarDate base class is forbidden")
     def udn(self):
@@ -94,9 +94,9 @@ cdef class UniversalCalendarDate:
 
 cdef extern from "CUniversalCalendar/common/YMD.h":
     struct YMD:
-        long year
-        unsigned char month
-        unsigned char day
+        int_least32_t year
+        uint_least8_t month
+        uint_least8_t day
 
 cdef class SpecialDate_YMD(UniversalCalendarDate):
     cdef YMD _ymd
@@ -128,8 +128,8 @@ cdef class SpecialDate_YMD(UniversalCalendarDate):
         return self._ymd.day
 
 cdef extern from "CUniversalCalendar/Gregorian/Gregorian.h":
-    int GregorianEncode(CalendarCache*, YMD*, long)
-    int GregorianDecode(CalendarCache*, long*, YMD*)
+    int GregorianEncode(CalendarCache*, YMD*, int_fast32_t)
+    int GregorianDecode(CalendarCache*, int_fast32_t*, YMD*)
 
 cdef class GregorianDate(SpecialDate_YMD):
     def __init__(self,*args):
