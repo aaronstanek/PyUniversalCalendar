@@ -146,6 +146,10 @@ class TestGregorianDate(unittest.TestCase):
             b = [a.year(),a.month(),a.day()]
             c = puc.GregorianDate(*b)
             self.assertEqual(udn,c.udn())
+    
+    def test_str(self):
+        self.assertEqual(str(puc.GregorianDate(1969,7,20)),"GregorianDate(1969,7,20)")
+        self.assertEqual(str(puc.GregorianDate(-60,4,1)),"GregorianDate(-60,4,1)")
 
 class TestJulianDate(unittest.TestCase):
 
