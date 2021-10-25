@@ -158,3 +158,15 @@ cdef class GregorianDate(SpecialDate_YMD):
         check_error_code( GregorianEncode(&PUC_CACHE,&(self._ymd),self._udn) )
     def _decode(self):
         check_error_code( GregorianDecode(&PUC_CACHE,&(self._udn),&(self._ymd)) )
+
+cdef extern from "CUniversalCalendar/Julian/Julian.h":
+    int JulianEncode(CalendarCache*, YMD*, int_fast32_t)
+    int JulianDecode(CalendarCache*, int_fast32_t*, YMD*)
+
+cdef class JulianDate(SpecialDate_YMD):
+    def __init__(self,*args):
+        super().__init__(*args)
+    def _encode(self):
+        check_error_code( JulianEncode(&PUC_CACHE,&(self._ymd),self._udn) )
+    def _decode(self):
+        check_error_code( JulianDecode(&PUC_CACHE,&(self._udn),&(self._ymd)) )

@@ -9,6 +9,7 @@ ext = Extension(name="puc", sources=[
         "src/PyUniversalCalendar/CUniversalCalendar/common/CalendarCache.c",
         "src/PyUniversalCalendar/CUniversalCalendar/dayOfWeek/DOWcache.c",
         "src/PyUniversalCalendar/CUniversalCalendar/JulianGregorianMonthCache/JulianGregorianMonthCache.c",
-        "src/PyUniversalCalendar/cUniversalCalendar/Gregorian/Gregorian.c"
+        "src/PyUniversalCalendar/cUniversalCalendar/Gregorian/Gregorian.c",
+        "src/PyUniversalCalendar/cUniversalCalendar/Julian/Julian.c"
     ])
 setup(ext_modules=cythonize(ext,language_level=3))
