@@ -172,6 +172,8 @@ class TestJulianDate(unittest.TestCase):
 
     def test_correspondence(self):
         # After 28th February 1700 add eleven days to the Julian Calendar
+        # source:
+        # https://www.nottingham.ac.uk/manuscriptsandspecialcollections/researchguidance/datingdocuments/juliangregorian.aspx
         a = puc.JulianDate(1700,3,1)
         b = puc.GregorianDate(a)
         self.assertEqual(b.year(),1700)
