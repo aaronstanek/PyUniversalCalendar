@@ -168,5 +168,9 @@ class TestJulianDate(unittest.TestCase):
         self.assertEqual(b.month(),3)
         self.assertEqual(b.day(),12)
 
+    def test_str(self):
+        self.assertEqual(str(puc.JulianDate(1969,7,20)),"JulianDate(1969,7,20)")
+        self.assertEqual(str(puc.JulianDate(-60,4,1)),"JulianDate(-60,4,1)")
+
 if __name__ == '__main__':
     unittest.main()
