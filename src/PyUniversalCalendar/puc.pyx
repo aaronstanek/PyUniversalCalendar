@@ -1,3 +1,6 @@
+cdef extern from "CUniversalCalendar/common/ErrorType.h":
+    ctypedef int UniversalCalendarErrorCode
+
 cdef extern from "<stdint.h>":
     ctypedef int intmax_t
     ctypedef unsigned int uintmax_t
@@ -35,7 +38,7 @@ class UniversalCalendarValidationError(UniversalCalendarError):
 class UniversalCalendarBoundsError(UniversalCalendarError):
     pass
 
-def check_error_code(int code):
+def check_error_code(UniversalCalendarErrorCode code):
     if code:
         if code == 1:
             raise UniversalCalendarValidationError()
@@ -148,8 +151,8 @@ cdef class SpecialDate_YMD(UniversalCalendarDate):
         return self._ymd.day
 
 cdef extern from "CUniversalCalendar/Gregorian/Gregorian.h":
-    int GregorianEncode(CalendarCache*, YMD*, int_fast32_t)
-    int GregorianDecode(CalendarCache*, int_fast32_t*, YMD*)
+    UniversalCalendarErrorCode GregorianEncode(CalendarCache*, YMD*, int_fast32_t)
+    UniversalCalendarErrorCode GregorianDecode(CalendarCache*, int_fast32_t*, YMD*)
 
 cdef class GregorianDate(SpecialDate_YMD):
     def __init__(self,*args):
@@ -160,8 +163,8 @@ cdef class GregorianDate(SpecialDate_YMD):
         check_error_code( GregorianDecode(&PUC_CACHE,&(self._udn),&(self._ymd)) )
 
 cdef extern from "CUniversalCalendar/Julian/Julian.h":
-    int JulianEncode(CalendarCache*, YMD*, int_fast32_t)
-    int JulianDecode(CalendarCache*, int_fast32_t*, YMD*)
+    UniversalCalendarErrorCode JulianEncode(CalendarCache*, YMD*, int_fast32_t)
+    UniversalCalendarErrorCode JulianDecode(CalendarCache*, int_fast32_t*, YMD*)
 
 cdef class JulianDate(SpecialDate_YMD):
     def __init__(self,*args):
