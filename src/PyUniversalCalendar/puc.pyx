@@ -32,23 +32,16 @@ cdef extern from "CUniversalCalendar/common/CalendarCache.h":
 cdef CalendarCache PUC_CACHE
 CalendarCache__constructor(&PUC_CACHE)
 
-class UniversalCalendarError(Exception):
-    pass
-
-class UniversalCalendarValidationError(UniversalCalendarError):
-    pass
-
-class UniversalCalendarBoundsError(UniversalCalendarError):
-    pass
-
 def check_error_code(UniversalCalendarErrorCode code):
     if code:
         if code == 1:
-            raise UniversalCalendarValidationError()
+            raise ValueError()
         elif code == 2:
-            raise UniversalCalendarBoundsError()
+            raise OverflowError()
+        elif code == 3:
+            raise MemoryError()
         else:
-            raise UniversalCalendarError("Unknown Internal Error")
+            raise Exception("Unknown Internal Error")
 
 cdef extern from "CUniversalCalendar/dayOfWeek/DayOfWeek.h":
     const char* dayOfWeekString(CalendarCache*, int_fast32_t)

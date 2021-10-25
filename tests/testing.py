@@ -4,22 +4,6 @@ sys.path.append("src")
 
 import PyUniversalCalendar as puc
 
-class TestErrorClasses(unittest.TestCase):
-
-    def test_a(self):
-        self.assertTrue(isinstance(
-            puc.UniversalCalendarError(),
-            Exception
-            ))
-        self.assertTrue(isinstance(
-            puc.UniversalCalendarValidationError(),
-            puc.UniversalCalendarError
-            ))
-        self.assertTrue(isinstance(
-            puc.UniversalCalendarBoundsError(),
-            puc.UniversalCalendarError
-            ))
-
 class TestBaseClass(unittest.TestCase):
 
     def test_a(self):
