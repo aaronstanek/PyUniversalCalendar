@@ -54,7 +54,7 @@ cdef class UniversalCalendarDate:
     def udn(self):
         return self._udn
     def day_of_week_string(self):
-        return bytes( dayOfWeekString(&PUC_CACHE,self._udn) ).decode("UTF-8")
+        return ( <bytes> dayOfWeekString(&PUC_CACHE,self._udn) ).decode("UTF-8")
     def day_of_week_iso(self):
         return dayOfWeekISO(self._udn)
     def __eq__(self,other):
